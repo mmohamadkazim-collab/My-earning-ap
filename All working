@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Student Rewards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f0f2f5; }
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .gradient-card { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
+        /* Spin Wheel Animation */
+        #wheel { transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1); }
+    </style>
+</head>
+<body class="pb-24">
+
+    <div class="gradient-card p-10 rounded-b-[50px] text-white shadow-2xl text-center relative">
+        <p class="text-xs opacity-70 tracking-widest uppercase">Student Balance</p>
+        <h1 class="text-6xl font-black mt-2"><span id="balance">500</span> <small class="text-xl">Coins</small></h1>
+        <div class="flex justify-center gap-3 mt-6">
+            <button onclick="alert('Withdrawal request sent!')" class="bg-white text-indigo-700 px-8 py-3 rounded-2xl font-bold shadow-lg active:scale-90 transition">Withdraw</button>
+            <button onclick="promoCode()" class="bg-indigo-900/40 px-6 py-3 rounded-2xl font-bold border border-white/20 active:scale-90 transition">Promo</button>
+        </div>
+    </div>
+
+    <div class="p-6 space-y-5">
+        
+        <div class="glass p-6 rounded-[30px] shadow-sm text-center border border-white">
+            <h3 class="font-bold text-gray-700 mb-4 uppercase text-sm tracking-tighter">Lucky Spin & Win</h3>
+            <div class="relative w-40 h-40 mx-auto mb-4 bg-indigo-100 rounded-full border-4 border-indigo-500 flex items-center justify-center overflow-hidden">
+                <div id="wheel" class="w-full h-full flex items-center justify-center text-3xl font-bold text-indigo-600">🎡</div>
+                <div class="absolute top-0 w-1 h-6 bg-red-500"></div>
+            </div>
+            <button onclick="spinNow()" id="spinBtn" class="bg-indigo-600 text-white w-full py-3 rounded-2xl font-bold shadow-md active:scale-95 transition">Spin Now</button>
+        </div>
+
+        <div class="glass p-5 rounded-[30px] flex items-center gap-4 shadow-sm border border-white cursor-pointer" onclick="startMath()">
+            <div class="bg-orange-100 p-4 rounded-2xl text-orange-600"><i class="fas fa-brain fa-lg"></i></div>
+            <div class="flex-1">
+                <h3 class="font-bold">Math Quiz</h3>
+                <p class="text-xs text-gray-400 font-medium uppercase">Earn 20 Coins per quiz</p>
+            </div>
+            <span class="text-green-500 font-bold">+20</span>
+        </div>
+
+        <div class="bg-gray-200 h-24 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-400">
+            <p class="text-gray-500 text-xs italic">Advertisement (AdMob ca-app-pub-xxx...)</p>
+        </div>
+
+        <div onclick="dailyBonus()" class="glass p-5 rounded-[30px] flex items-center gap-4 shadow-sm border border-white cursor-pointer">
+            <div class="bg-green-100 p-4 rounded-2xl text-green-600"><i class="fas fa-gift fa-lg"></i></div>
+            <div class="flex-1">
+                <h3 class="font-bold">Daily Check-in</h3>
+                <p class="text-xs text-gray-400 font-medium uppercase">Come back tomorrow</p>
+            </div>
+            <span class="text-green-500 font-bold">+50</span>
+        </div>
+
+    </div>
+
+    <div onclick="adminLogin()" class="text-center opacity-10 text-[8px] mt-10">Admin Access v2.0</div>
+
+    <script>
+        let balance = 500;
+        let isSpinning = false;
+
+        function updateUI() {
+            document.getElementById('balance').innerText = balance;
+        }
+
+        function spinNow() {
+            if (isSpinning) return;
+            isSpinning = true;
+            let wheel = document.getElementById('wheel');
+            let deg = Math.floor(5000 + Math.random() * 5000);
+            wheel.style.transform = `rotate(${deg}deg)`;
+            
+            setTimeout(() => {
+                let prize = Math.floor(Math.random() * 100);
+                balance += prize;
+                updateUI();
+                alert("You won " + prize + " Coins!");
+                isSpinning = false;
+            }, 4000);
+        }
+
+        function startMath() {
+            let num1 = Math.floor(Math.random() * 50);
+            let num2 = Math.floor(Math.random() * 50);
+            let ans = prompt("What is " + num1 + " + " + num2 + "?");
+            if (ans == (num1 + num2)) {
+                balance += 20;
+                updateUI();
+                alert("Correct! +20 Coins");
+            } else {
+                alert("Wrong! Answer was " + (num1 + num2));
+            }
+        }
+
+        function dailyBonus() {
+            balance += 50;
+            updateUI();
+            alert("Success! 50 Coins added to your wallet.");
+        }
+
+        function promoCode() {
+            let code = prompt("Enter Promo Code:");
+            if (code === "STUDENT786") {
+                balance += 100;
+                updateUI();
+                alert("Jackpot! 100 Coins added.");
+            } else {
+                alert("Invalid Code!");
+            }
+        }
+
+        function adminLogin() {
+            let p = prompt("Password:");
+            if(p === "admin123") alert("Admin Dashboard: 0 Pending Withdrawals");
+        }
+    </script>
+</body>
+</html>
