@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Student Rewards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .gradient-bg { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen pb-20 font-sans">
+
+    <div class="gradient-bg p-8 rounded-b-[40px] text-white shadow-lg text-center">
+        <p class="text-sm opacity-80 uppercase tracking-widest">Available Coins</p>
+        <h1 id="coins" class="text-5xl font-extrabold mt-1">500</h1>
+        <div class="mt-4 flex justify-center gap-4">
+            <button onclick="openSection('withdraw')" class="bg-white text-indigo-600 px-6 py-2 rounded-full font-bold shadow-md">Withdraw</button>
+            <button onclick="openSection('promo')" class="bg-indigo-800 px-6 py-2 rounded-full font-bold border border-white/20">Promo Code</button>
+        </div>
+    </div>
+
+    <div id="main-sections" class="p-5 max-w-md mx-auto space-y-4">
+        
+        <div onclick="dailyCheckIn()" class="glass p-4 rounded-3xl flex items-center gap-4 shadow-sm border border-white cursor-pointer active:scale-95 transition">
+            <div class="bg-yellow-100 p-3 rounded-2xl text-yellow-600"><i class="fas fa-calendar-check fa-lg"></i></div>
+            <div class="flex-1"><h3 class="font-bold">Daily Check-in</h3><p class="text-xs text-gray-500">Claim 50 coins daily</p></div>
+            <span class="text-green-600 font-bold">+50</span>
+        </div>
+
+        <div onclick="alert('Spin Wheel Loading...')" class="glass p-4 rounded-3xl flex items-center gap-4 shadow-sm border border-white cursor-pointer">
+            <div class="bg-purple-100 p-3 rounded-2xl text-purple-600"><i class="fas fa-dharmachakra fa-lg"></i></div>
+            <div class="flex-1"><h3 class="font-bold">Lucky Spin</h3><p class="text-xs text-gray-500">Try your luck now</p></div>
+            <i class="fas fa-chevron-right text-gray-300"></i>
+        </div>
+
+        <div onclick="mathQuiz()" class="glass p-4 rounded-3xl flex items-center gap-4 shadow-sm border border-white cursor-pointer">
+            <div class="bg-blue-100 p-3 rounded-2xl text-blue-600"><i class="fas fa-calculator fa-lg"></i></div>
+            <div class="flex-1"><h3 class="font-bold">Math Quiz</h3><p class="text-xs text-gray-500">Solve & Earn coins</p></div>
+            <span class="text-green-600 font-bold">+10</span>
+        </div>
+
+        <h3 class="font-bold text-slate-700 mt-6 ml-2 uppercase text-xs">Micro Tasks</h3>
+        <div class="glass p-4 rounded-3xl flex items-center justify-between shadow-sm border border-white">
+            <div class="flex items-center gap-3">
+                <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                <div><p class="font-semibold text-sm">Subscribe Channel</p></div>
+            </div>
+            <button onclick="addCoins(20)" class="bg-indigo-100 text-indigo-600 px-4 py-1 rounded-lg text-xs font-bold">₹20</button>
+        </div>
+    </div>
+
+    <p onclick="adminLogin()" class="text-center text-[10px] text-slate-300 mt-10">System Admin v1.0</p>
+
+    <script>
+        let coins = 500;
+        function addCoins(amt) {
+            coins += amt;
+            document.getElementById('coins').innerText = coins;
+            alert("Success! Coins added.");
+        }
+
+        function dailyCheckIn() {
+            addCoins(50);
+            alert("Daily Bonus Claimed!");
+        }
+
+        function mathQuiz() {
+            let res = prompt("What is 15 + 25?");
+            if(res == "40") addCoins(10);
+            else alert("Wrong Answer!");
+        }
+
+        function adminLogin() {
+            let pass = prompt("Enter Admin Password:");
+            if(pass === "admin786") {
+                alert("Welcome Admin! You have 12 pending withdrawals.");
+            }
+        }
+    </script>
+</body>
+</html>
